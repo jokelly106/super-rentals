@@ -1,0 +1,50 @@
+<article class="rental">
+    <Rental::Image src={{@rental.image}} alt="A picture of {{@rental.title}}" />
+    <Map @lat={{@rental.location.lat}} @lng={{@rental.location.lng}} @zoom="9" @width="150" @height="150"
+        alt="A map of {{@rental.title}}" />
+    <div class="rental-form">
+
+        <div class="detail">
+            <label class="form-label">Image</label>
+            <Input class="light wide" placeholder="URL to image" @value={{@rental.image}} />
+        </div>
+
+        <div class="detail">
+            <label class="form-label">Latitude</label>
+            <Input class="light" @value={{@rental.location.lat}} />
+            <label class="form-label">Longitude</label>
+            <Input class="light" @value={{@rental.location.lng}} />
+        </div>
+    </div>
+</article>
+<article class="rental">
+    <div class="rental-form">
+        <div class="detail">
+            <label class="form-label">Title</label>
+            <Input class="light" placeholder="ex. Grand Old Mansion" @value={{@rental.title}} />
+        </div>
+        <div class="detail owner">
+            <label class="form-label">Owner</label>
+            <Input class="light" placeholder="ex. John Smith" @value={{@rental.owner}} />
+        </div>
+        <div class="detail type">
+            <label class="form-label">Type</label>
+            <Input class="light" placeholder="ex. Standalone" @value={{@rental.type}} />
+        </div>
+        <div class="detail category">
+            <label class="form-label">Category</label>
+            <Input class="light" placeholder="ex. Estate" @value={{@rental.category}} />
+        </div>
+        <div class="detail location">
+            <label class="form-label">Location</label>
+            <Input class="light" placeholder="ex. NYC" @value={{@rental.city}} />
+        </div>
+        <div class="detail bedrooms">
+            <label class="form-label">Number of Bedrooms</label>
+            <Input type="number" class="light" @value={{@rental.bedrooms}} />
+        </div>
+
+        <button type="submit" class="button button-save" {{on 'click' this.save}}>Save</button>
+
+    </div>
+</article>

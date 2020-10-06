@@ -3,7 +3,7 @@
         <span>Where would you like to stay?</span>
         <Input @value={{this.query}} class="light" />
     </label>
-
+    <LinkTo @route="rental-form-new" class="button button-new">Add New Rental</LinkTo>
     <ul class="results">
         <Rentals::Filter @rentals={{@rentals}} @query={{this.query}} as |results|>
             {{#each results as |rental|}}
