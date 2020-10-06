@@ -158,6 +158,11 @@ p {
   float: right;
 }
 
+.disabled{
+  background-color:gray;
+  pointer-events: none;
+}
+
 .rental-form {
   width: 100%;
   padding: 20px 25px;

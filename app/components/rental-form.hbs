@@ -20,7 +20,7 @@
 <article class="rental">
     <div class="rental-form">
         <div class="detail">
-            <label class="form-label">Title</label>
+            <label class="form-label">Title (required)</label>
             <Input class="light" placeholder="ex. Grand Old Mansion" @value={{@rental.title}} />
         </div>
         <div class="detail owner">
@@ -44,7 +44,7 @@
             <Input type="number" class="light" @value={{@rental.bedrooms}} />
         </div>
 
-        <button type="submit" class="button button-save" {{on 'click' this.save}}>Save</button>
+        <button type="submit" class="button button-save {{if @rental.title "" "disabled"}}" {{on 'click' this.save}}>Save</button>
         {{#each this.rental.errors.title as |error|}}
             <div class="error">{{error.message}}:</div>
         {{/each}}
