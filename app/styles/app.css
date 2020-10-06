@@ -150,17 +150,21 @@ p {
   display: block;
 }
 
-.rental-form input.wide{
-  width:100%;
+.rental-form input.wide {
+  width: 100%;
 }
 
 .button-save {
-  float:right;
+  float: right;
 }
 
 .rental-form {
-  width:100%;
+  width: 100%;
   padding: 20px 25px;
+}
+
+.button-save {
+  cursor: pointer;
 }
 
 .menu input:focus {

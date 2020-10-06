@@ -45,6 +45,8 @@
         </div>
 
         <button type="submit" class="button button-save" {{on 'click' this.save}}>Save</button>
-
+        {{#each this.rental.errors.title as |error|}}
+            <div class="error">{{error.message}}:</div>
+        {{/each}}
     </div>
 </article>

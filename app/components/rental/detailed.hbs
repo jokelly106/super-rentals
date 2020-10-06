@@ -28,6 +28,9 @@
         <div class="detail description">
             <p>{{@rental.description}}</p>
         </div>
+        <div class="detail">
+            <LinkTo @route="rental-form-edit" @model={{@rental}} class="button">Edit</LinkTo>
+        </div>
     </div>
 
     <Map @lat={{@rental.location.lat}} @lng={{@rental.location.lng}} @zoom="12" @width="894" @height="600"
