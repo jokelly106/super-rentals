@@ -40,6 +40,7 @@ module('Integration | Component | rental-form', function(hooks) {
 
     assert.dom('article .detail.title input').hasValue('Grand Old Mansion');
     assert.dom('article .detail.owner input').hasValue('Veruca Salt');
+    assert.dom('article .detail.description input').hasValue('This grand old mansion sits on over 100 acres of rolling hills and dense redwood forests.');
     assert.dom('article .detail.category input').hasValue('Estate');
     assert.dom('article .detail.location input').hasValue('San Francisco');
     assert.dom('article .detail.bedrooms input').hasValue('15');

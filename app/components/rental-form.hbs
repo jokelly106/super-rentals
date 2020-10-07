@@ -27,6 +27,10 @@
             <label class="form-label">Owner</label>
             <Input class="light" placeholder="ex. John Smith" @value={{@rental.owner}} />
         </div>
+        <div class="detail description">
+            <label class="form-label">Description</label>
+            <Input class="light" placeholder="ex. A beautiful home" @value={{@rental.description}} />
+        </div>
         <div class="detail category">
             <label class="form-label">Category</label>
             <Input class="light" placeholder="ex. Estate" @value={{@rental.category}} />
@@ -40,9 +44,10 @@
             <Input type="number" class="light" @value={{@rental.bedrooms}} />
         </div>
 
-        <button type="submit" class="button button-save {{if @rental.title "" "disabled"}}" {{on 'click' this.save}}>Save</button>
+        <button type="submit" class="button button-save {{if @rental.title "" "disabled"}}"
+            {{on 'click' this.save}}>Save</button>
         {{#each this.rental.errors.title as |error|}}
-            <div class="error">{{error.message}}:</div>
+        <div class="error">{{error.message}}:</div>
         {{/each}}
     </div>
 </article>
