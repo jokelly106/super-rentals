@@ -19,13 +19,30 @@ module('Acceptance | super rentals', function (hooks) {
 
   test('viewing the details of a rental property', async function (assert) {
     await visit('/');
-    assert.dom('.rental').exists({ count: 3 });
-
+    assert.dom('.rental').exists();
+    let link = find('.rental:first-of-type a');
+    let url = new URL(link.href);
     await click('.rental:first-of-type a');
-    assert.equal(currentURL(), '/rentals/grand-old-mansion');
+    assert.equal(currentURL(), url.pathname);
   });
 
   test('visiting /rentals/grand-old-mansion', async function (assert) {
+    let store = this.owner.lookup('service:store');
+    let rental = store.createRecord('rental', {
+      id: 'grand-old-mansion',
+      title: 'Grand Old Mansion',
+      owner: 'Veruca Salt',
+      city: 'San Francisco',
+      location: {
+        lat: 37.7749,
+        lng: -122.4194,
+      },
+      category: 'Estate',
+      bedrooms: 15,
+      image: 'https://upload.wikimedia.org/wikipedia/commons/c/cb/Crane_estate_(5).jpg',
+      description: 'This grand old mansion sits on over 100 acres of rolling hills and dense redwood forests.',
+    });
+    await rental.save();
     await visit('/rentals/grand-old-mansion');
 
     assert.equal(currentURL(), '/rentals/grand-old-mansion');

@@ -4,16 +4,16 @@
         alt="A map of {{@rental.title}}" />
     <div class="rental-form">
 
-        <div class="detail">
+        <div class="detail img">
             <label class="form-label">Image</label>
             <Input class="light wide" placeholder="URL to image" @value={{@rental.image}} />
         </div>
 
-        <div class="detail">
+        <div class="detail loc">
             <label class="form-label">Latitude</label>
-            <Input class="light" @value={{@rental.location.lat}} />
+            <Input class="light lat" @value={{@rental.location.lat}} />
             <label class="form-label">Longitude</label>
-            <Input class="light" @value={{@rental.location.lng}} />
+            <Input class="light lng" @value={{@rental.location.lng}} />
         </div>
     </div>
 </article>
