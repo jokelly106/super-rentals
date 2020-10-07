@@ -5,28 +5,6 @@ import { setupApplicationTest } from 'ember-qunit';
 module('Acceptance | super rentals', function (hooks) {
   setupApplicationTest(hooks);
 
-  hooks.before(function(){
-    let store = this.owner.lookup('service:store');
-    let rental = store.createRecord('rental', {
-      title: 'Grand Old Mansion',
-      owner: 'Veruca Salt',
-      city: 'San Francisco',
-      location: {
-        lat: 37.7749,
-        lng: -122.4194,
-      },
-      category: 'Estate',
-      bedrooms: 15,
-      image: 'https://upload.wikimedia.org/wikipedia/commons/c/cb/Crane_estate_(5).jpg',
-      description: 'This grand old mansion sits on over 100 acres of rolling hills and dense redwood forests.',
-    });
-    await rental.save();
-  });
-
-  hooks.after(function(){
-    await rental.destroyRecord();
-  })
-
   test('visiting /', async function (assert) {
     await visit('/');
     assert.equal(currentURL(), '/');
@@ -50,14 +28,17 @@ module('Acceptance | super rentals', function (hooks) {
   });
 
   test('visiting /rentals/[id]', async function (assert) {
-    
-    await visit(`/rentals/${rental.id}`);
-
-    
-    assert.equal(currentURL(), `/rentals/${rental.id}`);
+    await visit('/');
+    assert.dom('.rental').exists();
+    let link = find('.rental:first-of-type a');
+    let url = new URL(link.href);
+    await click('.rental:first-of-type a');
+    let store = this.owner.lookup('service:store');
+    let rental = store.peekRecord('rental', Number(url.pathname.split('/')[2]));
+    assert.equal(currentURL(), url.pathname);
     assert.dom('nav').exists();
     assert.dom('h1').containsText('SuperRentals');
-    assert.dom('h2').containsText('Grand Old Mansion');
+    assert.dom('h2').containsText(rental.title);
     assert.dom('.rental.detailed').exists();
     assert.dom('.share.button').hasText('Share on Twitter');
 
@@ -68,7 +49,7 @@ module('Acceptance | super rentals', function (hooks) {
 
     assert.equal(
       tweetURL.searchParams.get('url'),
-      `${window.location.origin}/rentals/${rental.id}`
+      `${window.location.origin + url.pathname}`
     );
     
   });
