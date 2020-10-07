@@ -4,6 +4,29 @@ import { setupApplicationTest } from 'ember-qunit';
 
 module('Acceptance | super rentals', function (hooks) {
   setupApplicationTest(hooks);
+
+  hooks.before(function(){
+    let store = this.owner.lookup('service:store');
+    let rental = store.createRecord('rental', {
+      title: 'Grand Old Mansion',
+      owner: 'Veruca Salt',
+      city: 'San Francisco',
+      location: {
+        lat: 37.7749,
+        lng: -122.4194,
+      },
+      category: 'Estate',
+      bedrooms: 15,
+      image: 'https://upload.wikimedia.org/wikipedia/commons/c/cb/Crane_estate_(5).jpg',
+      description: 'This grand old mansion sits on over 100 acres of rolling hills and dense redwood forests.',
+    });
+    await rental.save();
+  });
+
+  hooks.after(function(){
+    await rental.destroyRecord();
+  })
+
   test('visiting /', async function (assert) {
     await visit('/');
     assert.equal(currentURL(), '/');
@@ -26,25 +49,10 @@ module('Acceptance | super rentals', function (hooks) {
     assert.equal(currentURL(), url.pathname);
   });
 
-  test('visiting /rentals/grand-old-mansion, testing store save and delete', async function (assert) {
-    let store = this.owner.lookup('service:store');
-    let rental = store.createRecord('rental', {
-      id: 'grand-old-mansion',
-      title: 'Grand Old Mansion',
-      owner: 'Veruca Salt',
-      city: 'San Francisco',
-      location: {
-        lat: 37.7749,
-        lng: -122.4194,
-      },
-      category: 'Estate',
-      bedrooms: 15,
-      image: 'https://upload.wikimedia.org/wikipedia/commons/c/cb/Crane_estate_(5).jpg',
-      description: 'This grand old mansion sits on over 100 acres of rolling hills and dense redwood forests.',
-    });
-    await rental.save();
+  test('visiting /rentals/[id]', async function (assert) {
+    
     await visit(`/rentals/${rental.id}`);
-    await rental.destroyRecord();
+
     
     assert.equal(currentURL(), `/rentals/${rental.id}`);
     assert.dom('nav').exists();
