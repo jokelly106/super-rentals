@@ -26,7 +26,7 @@ module('Acceptance | super rentals', function (hooks) {
     assert.equal(currentURL(), url.pathname);
   });
 
-  test('visiting /rentals/grand-old-mansion', async function (assert) {
+  test('visiting /rentals/grand-old-mansion, testing store save and delete', async function (assert) {
     let store = this.owner.lookup('service:store');
     let rental = store.createRecord('rental', {
       id: 'grand-old-mansion',
@@ -43,9 +43,10 @@ module('Acceptance | super rentals', function (hooks) {
       description: 'This grand old mansion sits on over 100 acres of rolling hills and dense redwood forests.',
     });
     await rental.save();
-    await visit('/rentals/grand-old-mansion');
-
-    assert.equal(currentURL(), '/rentals/grand-old-mansion');
+    await visit(`/rentals/${rental.id}`);
+    await rental.destroyRecord();
+    
+    assert.equal(currentURL(), `/rentals/${rental.id}`);
     assert.dom('nav').exists();
     assert.dom('h1').containsText('SuperRentals');
     assert.dom('h2').containsText('Grand Old Mansion');
@@ -59,8 +60,9 @@ module('Acceptance | super rentals', function (hooks) {
 
     assert.equal(
       tweetURL.searchParams.get('url'),
-      `${window.location.origin}/rentals/grand-old-mansion`
+      `${window.location.origin}/rentals/${rental.id}`
     );
+    
   });
 
   test('visiting /about', async function (assert) {
